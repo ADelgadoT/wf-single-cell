@@ -16,16 +16,16 @@ process build_minimap_index {
     /*
     Build minimap index from reference genome
     */
-    label "singlecell"
+    label "singlecell_bigmem"
     cpus params.threads
-    memory '16 GB'
+
     input:
         path "reference.fa"
     output:
         path "genome_index.mmi", emit: index
     script:
     """
-    minimap2 -t ${task.cpus} -I 16G -d "genome_index.mmi" "reference.fa"
+    minimap2 -t ${task.cpus} -I ${task.memory.giga}G -d "genome_index.mmi" "reference.fa"
     """
 }
 
